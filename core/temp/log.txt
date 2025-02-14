@@ -1,0 +1,46 @@
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+Функция: lol UserWarning C:\Users\ireymers\JOHN\core\logger\logger.py 68
+
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+WARNING:   Функция: lol UserWarning C:\Users\ireymers\JOHN\core\logger\logger.py 68
+
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+WARNING:   Функция: lol UserWarning C:\Users\ireymers\JOHN\core\logger\logger.py 69
+
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+WARNING:   Функция: lol UserWarning C:\Users\ireymers\JOHN\core\logger\logger.py 69
+
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+WARNING:   Функция: lol UserWarning C:\Users\ireymers\JOHN\core\logger\logger.py 69
+
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+WARNING:   Функция: lol UserWarning C:\Users\ireymers\JOHN\core\logger\logger.py 69
+
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+WARNING:   Функция: lol UserWarning C:\Users\ireymers\JOHN\core\logger\logger.py 69
+
+INFO:   Модуль fucker инициализрован!   args: ()   kwargs:{}   
+INFO:   Функция: fucker.lol   args: (1,)   kwargs:{'b': 1}   
+WARNING:   Функция: lol UserWarning C:\Users\ireymers\JOHN\core\logger\logger.py 69
+
