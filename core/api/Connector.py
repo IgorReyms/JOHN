@@ -1,8 +1,8 @@
 import requests
 from glpi_api import GLPI, GLPIError, _glpi_error, _unknown_error
 import glpi_api
-
-
+from core.api.Rule import Rule
+from logging import Logger
 class GLPICustom(GLPI):
 
     def _init_session(self, apptoken, auth, use_headers=True):
@@ -42,32 +42,32 @@ class GLPICustom(GLPI):
         }.get(response.status_code, _unknown_error)(response)
 
 class ticket_update:
-    def __init__(self):
+    def __init__(self,Rule):
         self.glpi_url = "https://raccoon.npss.loc/helpdesk/apirest.php"
         self.api_token = "ayn83esajCpe0ii31l7gcETlgTEHGoGpwdrPSPJl"
         self.user_token = "Jnn8ZslaVYDS0HIcCmko6uNpWwa2UCHmAy4jJsA1"
-        self.__add_JOHN()
+        self.__add_JOHN(Rule)
 
-    def get_type(self):
+    def get_type(self,Rule):
 
         return Rule
         pass
 
-    def __add_JOHN(self):
+    def __add_JOHN(self,Rule):
         glp = GLPICustom(self.glpi_url, self.api_token, self.user_token)
-        glp.delete_sub_items
-        # response = glp.get_item('Problem', 4)
-        #response = glp.add('TicketFollowup',{'rel':'Problem','tickets_id': 607,'content': 'fucking she'})
-        # response = glp.get_sub_items('Ticket', 607,'ITILFollowup')
-        #response = glp.update('Problem',{'id': 12,"status": 4})
-        #response = glp.add_sub_items('Problem',4,'ProblemTask',[{"id": 61, "users_id": 61, 'tickets_id': 4, "status": 1}])
-        # response = glp.add_sub_items("Ticket", 607, "TicketValidation",{"id": 61, "users_id": 61, 'tickets_id': 607, "status": 2})
+        #response = glp.add('Problem',{'content':'Say Hello BANANAS','status':1,'name': 'Просто говнище','itilcategories_id': 2,'time_to_resolve':'2025-02-14 13:02'})
+        #response = glp.add('ITILFollowup',{'itemtype':'Problem','items_id': 12,'content': 'fucking she'})
+        #response = glp.add_sub_items('Problem', 15,'Problem_User',{'problems_id':15,'type':2,'users_id': 184})
+        #response = glp.update('Problem', {'id': 15, 'name': 'Просто говнище','itilcategories_id': 2,'time_to_resolve':'2025-02-14 13:02'})
 
+        #response = glp.update('Ticket',3777,{'id':3777,'status':3})
 
-        # response = glp.add_sub_items("Ticket",607,'TicketTask', {"tickets_id": 607, "content": "Followup contents"})
-        # response = glp.add_sub_items("Problem",12,'ProblemTask', {"problems_id": 12, "content": "Followup contents", "status": 2})
-        # response = glp.add_sub_items("Problem", 12, "ITILFollowup", {"items_id": 12, "itemtype":"Problem","content":"Идинахуй"})
+        response = glp.update('Ticket',{'id':3777,'status':1})
 
+        #response = glp.get_item('Problem',18)
+        #response = glp.add_sub_items("Ticket", 607, "TicketValidation",{"id": 61, "users_id": 61, 'tickets_id': 607, "status": 2})
+
+        #response = glp.add("TicketFollowup",{"tickets_id": 607, "users_id": 2, "content": "fucking shet", "is_private": 0, "status": 2})
         print(response)
 
-a = ticket_update()
+#a = ticket_update(1)
