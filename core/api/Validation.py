@@ -6,6 +6,7 @@ from uuid import uuid4
 class Task(BaseModel):
     date: datetime
     author: str
+    user: str
     description: str
     category: str
 
@@ -30,10 +31,10 @@ class work:
         tasks = self.__parse_glpi_message(message,endpoint)
         try:
             if endpoint == 'ticket':
-                self.response_valid = Ticket_task(**tasks)
+                self.response = Ticket_task(**tasks)
             if endpoint == 'problem':
-                self.response_valid = Problem_task(**tasks)
-            print(self.response_valid)
+                self.response = Problem_task(**tasks)
+            print(self.response)
         except ValueError as error:
             print(error.json())
 
@@ -98,6 +99,9 @@ class work:
 
                 author_line = next((line for line in lines if "Автор" in line), None)
                 task['author'] = author_line.split('Автор')[1].strip() if author_line else None
+
+                user_line = next((line for line in lines if "Пользователю назначена задача" in line), None)
+                task['user'] = user_line.split('Пользователю назначена задача')[1].strip() if user_line else None
 
                 description_line = next((line for line in lines if "Описание" in line), None)
                 task['description'] = description_line.split('<p>')[1].split('</p>')[0].replace('Описание',

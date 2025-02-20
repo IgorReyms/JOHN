@@ -1,10 +1,80 @@
-from Task import TicketTask
+from core.api.Task import TicketTask
+from core.api.Problem_User import Problem_User
+
+
+class FirstAccessDescriptor_Problem:
+    Problem_body = {}
+
+    def __init__(self, attr_name):
+        self.attr_name = attr_name
+
+    def __get__(self, instance, owner):
+        if instance is None:
+            return self  # Поддержка доступа к атрибуту класса напрямую
+
+        # Проверяем наличие флага для этого атрибута на экземпляре
+        access_flag_name = f'_has_accessed_{self.attr_name}'
+        if not hasattr(instance, access_flag_name):
+            instance.flag = 'True'  # Устанавливаем флаг
+            setattr(instance, access_flag_name, 'True')  # Задаем флаг для атрибута
+            # if self.attr != None:
+            self.pakovchik()
+
+        return getattr(instance, f'_{self.attr_name}')
+
+    def __set__(self, instance, value):
+        # Проверяем наличие флага для этого атрибута на экземпляре
+
+        access_flag_name = f'_has_accessed_{self.attr_name}'
+        if not hasattr(instance, access_flag_name):
+            instance.flag = 'True'  # Устанавливаем флаг
+            setattr(instance, access_flag_name, 'True')  # Задаем флаг для атрибута
+            # if self.attr != None:
+            self.pakovchik(value)
+
+        setattr(instance, f'_{self.attr_name}', value)
+
+    def pakovchik(self,value):
+        #if self.attr_name in self.Ticket_body:
+        self.Problem_body[self.attr_name] = value
+        print('Slovarik Problem = ',self.Problem_body)
 
 class Problem:
+    flag: str = 'False'
+    itemtype: str = 'Problem'
+    id = FirstAccessDescriptor_Problem("id")
+    name = FirstAccessDescriptor_Problem("name")
+    entities_id = FirstAccessDescriptor_Problem("entities_id")
+    is_recursive = FirstAccessDescriptor_Problem("is_recursive")
+    is_deleted = FirstAccessDescriptor_Problem("is_deleted")
+    status = FirstAccessDescriptor_Problem("status")
+    content = FirstAccessDescriptor_Problem("content")
+    date_mod = FirstAccessDescriptor_Problem("date_mod")
+    date = FirstAccessDescriptor_Problem("date")
+    solvedate = FirstAccessDescriptor_Problem("solvedate")
+    closedate = FirstAccessDescriptor_Problem("closedate")
+    time_to_resolve = FirstAccessDescriptor_Problem("time_to_resolve")
+    users_id_recipient = FirstAccessDescriptor_Problem("users_id_recipient")
+    users_id_lastupdater = FirstAccessDescriptor_Problem("users_id_lastupdater")
+    urgency = FirstAccessDescriptor_Problem("urgency")
+    impact = FirstAccessDescriptor_Problem("impact")
+    priority = FirstAccessDescriptor_Problem("priority")
+    itilcategories_id = FirstAccessDescriptor_Problem("itilcategories_id")
+    impactcontent = FirstAccessDescriptor_Problem("impactcontent")
+    causecontent = FirstAccessDescriptor_Problem("causecontent")
+    symptomcontent = FirstAccessDescriptor_Problem("symptomcontent")
+    actiontime = FirstAccessDescriptor_Problem("actiontime")
+    begin_waiting_date = FirstAccessDescriptor_Problem("begin_waiting_date")
+    waiting_duration = FirstAccessDescriptor_Problem("waiting_duration")
+    close_delay_stat = FirstAccessDescriptor_Problem("close_delay_stat")
+    solve_delay_stat = FirstAccessDescriptor_Problem("solve_delay_stat")
+    date_creation = FirstAccessDescriptor_Problem("date_creation")
+    locations_id = FirstAccessDescriptor_Problem("locations_id")
+
 
     def __init__(self):
         self.task = TicketTask
-        self.problem_body()
+        self.Problem_User = Problem_User()
 
     def problem_body(self):
         self.id = 12 # ID Проблемы
