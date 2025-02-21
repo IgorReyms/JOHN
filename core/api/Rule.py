@@ -18,9 +18,10 @@ class Add:
 
 class Rule:
 
-    def __init__(self,response_valid:work,Ticket: Ticket,Problem: Problem):
+    def __init__(self,response_valid:work, Ticket: Ticket, Problem: Problem):
         self.Ticket = Ticket
         self.Problem = Problem
+        self.response_valid = response_valid
         self.__config(response_valid)
 
 
@@ -36,24 +37,25 @@ class Rule:
             # Или можно вызвать метод по умолчанию, поднять исключение, и т.д.
         if response_valid.response.type == 'ticket':
             self.Ticket.id = int(response_valid.response.ticket_id)
+        if response_valid.response.type == 'problem':
+            self.Problem.id = int(response_valid.response.ticket_id)
+
+
+    def find_users(self):
+        user = self.response_valid
+        return 184
 
     def Task_1(self,response_valid):
-        self.Object.Ticket_User.type = 2
-        self.Object.Ticket_User.users_id = 38 # Тех.под.юр
-        self.Object.itilcategories_id = 3 # Директум/Диадок
+        self.Ticket.Ticket_User.type = 2
+        self.Ticket.Ticket_User.users_id = 38 # Тех.под.юр
+        self.Ticket.itilcategories_id = 3 # Директум/Диадок
 
     def Task_2(self,response_valid):
-        #self.Object.content = f'Здарова! Сделал {self.rule_number}'
-        self.Object.status = 1 # Новая
-        self.Object.content = ''
-        user = response_valid.response.tasks.user
-        ## Надо сделать перевод юзера в его ID. Прилетает User: str, А надо user: int
-        if user == 'John':
-            fuck = 184
-        print(fuck)
-        self.Problem.Problem_User.users_id = fuck
-        print(self.Problem.Problem_User.users_id)
+        self.Problem.status = 1 # Новая
+        self.Problem.content = ''
+        self.Problem.Problem_User.users_id = self.find_users()
         self.Problem.Problem_User.type = 2
+        self.Ticket.Ticket_User.type = 2
         print('Дошёл до таска 2 в руле')
 
         pass

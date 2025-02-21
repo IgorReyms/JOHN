@@ -13,7 +13,7 @@ class Gear:
         self.response_valid = work(response,endpoint)
         self.Ticket = Ticket()
         self.Problem = Problem()
-        rule = Rule(self.response_valid,self.Ticket,self.Problem)
+        rule = Rule(self.response_valid, self.Ticket, self.Problem)
         Connector(rule,endpoint)
 
     def separator(self):

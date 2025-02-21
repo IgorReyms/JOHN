@@ -52,16 +52,10 @@ class Connector:
         self.glpi_url = "https://raccoon.npss.loc/helpdesk/apirest.php"
         self.api_token = "ayn83esajCpe0ii31l7gcETlgTEHGoGpwdrPSPJl"
         self.user_token = "Jnn8ZslaVYDS0HIcCmko6uNpWwa2UCHmAy4jJsA1"
-        self.config(Rule)
-        #self.__add_JOHN(1)
+        #self.config(Rule)
+        self.__add_JOHN(1)
 
     def config(self,Rule):
-        if self.endpopint == 'ticket':
-            self.slovarik = FirstAccessDescriptor_Ticket.Ticket_body
-            self.slovarik_User = FirstAccessDescriptor_Ticket_User.Ticket_User_body
-        if self.endpopint == 'problem':
-            self.slovarik = FirstAccessDescriptor_Problem.Problem_body
-            self.slovarik_User = FirstAccessDescriptor_Problem_User.Problem_User_body
         method_name = f"work_{Rule.rule_number}"  # Формируем имя метода
         try:
             method_to_call = getattr(self, method_name)
@@ -72,21 +66,26 @@ class Connector:
 
     def work_Task_1(self, Rule):
         glp = GLPICustom(self.glpi_url, self.api_token, self.user_token)
-        response_api_get = glp.get_sub_items('Ticket',Rule.Object.id,'Ticket_User')
+        response_api_get = glp.get_sub_items('Ticket',Rule.Ticket.id,'Ticket_User')
         Separator_API(Rule,endpoint = self.endpopint,type_glpi= 'get_sub_items',response = response_api_get)
-        glp.update_sub_items('Ticket', Rule.Object.id, 'Ticket_User',self.slovarik_User)
-        glp.update('Ticket',self.slovarik)
-        Rule.Object.content = f'Здарова! Сделал {Rule.rule_number}'
-        glp.add('ITILFollowup',{'itemtype':'Ticket','items_id': Rule.Object.id,'content': Rule.Object.content,"users_id": 184})
+        glp.update_sub_items('Ticket', Rule.Ticket.id, 'Ticket_User',{'id': Rule.Ticket.id,'type':Rule.Ticket.Ticket_User.type,'users_id':Rule.Ticket.Ticket_User.users_id})
+        glp.update('Ticket',{'id':Rule.Ticket.id,'itilcategories_id':Rule.Ticket.itilcategories_id})
+        Rule.Ticket.content = f'Здарова! Сделал {Rule.rule_number}'
+        glp.add('ITILFollowup',{'itemtype':'Ticket','items_id': Rule.Ticket.id,'content': Rule.Ticket.content,"users_id": 184})
         return print(f'Доставлено! Выполнена {Rule.rule_number}')
 
     def work_Task_2(self,Rule):
         glp = GLPICustom(self.glpi_url, self.api_token, self.user_token)
-        response_api_get = glp.get_item('Ticket',Rule.Object.id)
+        response_api_get = glp.get_item('Ticket',Rule.Ticket.id)
         Separator_API(Rule,endpoint = self.endpopint,type_glpi= 'get_item',response= response_api_get)
-        response = glp.add('Problem',self.slovarik)
+        response = glp.add('Problem',{'name':Rule.Problem.name,'content':Rule.Problem.content,'itilcategories_id':Rule.Problem.itilcategories_id,'time_to_resolve':Rule.Problem.time_to_resolve})
         Separator_API(Rule, endpoint=self.endpopint, type_glpi='add', response=response)
-        glp.add_sub_items('Problem',Rule.Object.id,'Problem_User',{'problems_id':Rule.Object.id,'type':Rule.Object.Problem_User.type,'users_id':Rule.Object.Problem_User.users_id})
+        response = glp.get_sub_items('Ticket', Rule.Ticket.id, 'Ticket_User')
+        print(response)
+        Separator_API(Rule, endpoint=self.endpopint, type_glpi='get_users', response=response)
+        glp.add_sub_items('Problem',Rule.Problem.id,'Problem_User',{'problems_id':Rule.Problem.id,'type':Rule.Problem.Problem_User.type,'users_id':Rule.Problem.Problem_User.users_id})
+        glp.add_sub_items('Problem', Rule.Problem.id, 'Problem_User',{'problems_id': Rule.Problem.id, 'type': 1,'users_id': Rule.Ticket.users_id_recipient,'status':Rule.Problem.status})
+        glp.add('Problem_Ticket',{'problems_id':Rule.Problem.id,'tickets_id':Rule.Ticket.id})
         print('До сюда дошёл, бля ура')
 
     def __add_JOHN(self,Rule):
@@ -98,7 +97,7 @@ class Connector:
 
         #response = glp.update('Ticket',3777,{'id':3777,'status':3})
 
-        response = glp.get_sub_items('Problem',12,'Problem_User')
+        response = glp.get_sub_items('Problem',26,'Problem_User')
 
         #response = glp.get_item('Problem',18)
         #response = glp.add_sub_items("Ticket", 607, "TicketValidation",{"id": 61, "users_id": 61, 'tickets_id': 607, "status": 2})
@@ -123,22 +122,26 @@ class Separator_API:
 
     def separator_ticket_get_sub_items(self,Rule,response):
         for item in response:
-            if item['type'] == Rule.Object.Ticket_User.type:
-                Rule.Object.Ticket_User.id = (item['id'])
+            if item['type'] == Rule.Ticket.Ticket_User.type:
+                Rule.Ticket.Ticket_User.id = item['id']
+            if item['type'] == Rule.Problem.Problem_User.type:
+                Rule.Problem.Problem_User.users_id = item['users_id']
 
     def separator_ticket_get_item(self,Rule,response):
-        for item in response:
-            Rule.Problem.name = item['name']
-            Rule.Problem.content = item['content']
-            Rule.Problem.itilcategories_id = item['itilcategories_id']
-            Rule.Problem.time_to_resolve = item['time_to_resolve']
+        Rule.Ticket.users_id_recipient = response.get('users_id_recipient')
+
+        Rule.Problem.name = response.get('name')
+        Rule.Problem.content = response.get('content')
+        Rule.Problem.itilcategories_id = response.get('itilcategories_id')
+        Rule.Problem.time_to_resolve = response.get('time_to_resolve')
 
     def separator_ticket_add(self,Rule,response):
+        response = response[0]
+        Rule.Problem.id = response.get('id')
+
+    def separator_ticket_get_users(self,Rule,response):
         for item in response:
-            Rule.Problem.id = item['id']
+            if item['type'] == Rule.Ticket.Ticket_User.type:
+                Rule.Problem.Problem_User.users_id = (item['users_id'])
 
-
-
-
-
-#a = Connector(1,1)
+a = Connector(1,1)

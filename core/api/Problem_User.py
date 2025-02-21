@@ -37,22 +37,22 @@ class FirstAccessDescriptor_Problem_User:
         print('Slovarik Problem_User = ',self.Problem_User_body)
 
 class Problem_User:
-    flag: str = 'False'
-    id = FirstAccessDescriptor_Problem_User("id")
-    problems_id = FirstAccessDescriptor_Problem_User("problems_id")
-    users_id = FirstAccessDescriptor_Problem_User("users_id")
-    type = FirstAccessDescriptor_Problem_User("type")
-    use_notification = FirstAccessDescriptor_Problem_User("use_notification")
-    alternative_email = FirstAccessDescriptor_Problem_User("alternative_email")
+    # flag: str = 'False'
+    # id = FirstAccessDescriptor_Problem_User("id")
+    # problems_id = FirstAccessDescriptor_Problem_User("problems_id")
+    # users_id = FirstAccessDescriptor_Problem_User("users_id")
+    # type = FirstAccessDescriptor_Problem_User("type")
+    # use_notification = FirstAccessDescriptor_Problem_User("use_notification")
+    # alternative_email = FirstAccessDescriptor_Problem_User("alternative_email")
 
 
     def __init__(self):
         pass
 
     def Problem_User_body(self,id):
-        self.id = 15
-        self.problems_id = 3777
-        self.users_id = 184
-        self.type = 1 # 1 = иницатор, 2 - исполнитель
-        self.use_notification = 0
-        self.alternative_email = ''
+        self.id : int
+        self.problems_id : int
+        self.users_id : int
+        self.type : int # 1 = иницатор, 2 - исполнитель
+        self.use_notification : int
+        self.alternative_email : str
